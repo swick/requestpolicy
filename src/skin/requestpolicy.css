@@ -236,6 +236,29 @@ toolbar[iconsize="small"][requestpolicyPermissive="true"] #requestpolicyToolbarB
   margin-bottom: 14px;
 }
 
+#rp-rules-add label:last-child {
+  margin-bottom: 14px;
+}
+
+#rp-request-info-header {
+  float: left;
+}
+
+.rp-info-button {
+  margin-right: 10px;
+  color: #844;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+.rp-info-button:hover {
+  background-color: #fff1f1;
+}
+
+.rp-info-button[selected-info="true"] {
+  background-color: #ffe1e1 !important;
+}
+
 #rp-origin {
   font-size: 1.2em;
   color : #555;

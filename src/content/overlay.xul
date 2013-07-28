@@ -95,7 +95,19 @@
           <vbox id="rp-details">
             <vbox id="rp-rules-remove" />
             <vbox id="rp-rules-add" />
-            <vbox id="rp-request-info" />
+            <vbox id="rp-request-info">
+              <vbox id="rp-request-info-header">
+                <label id="rp-request-info-all" selected-info="true" class="rp-info-button" value=""
+                   onclick="requestpolicy.menu.itemSelected(event);" />
+                <label id="rp-request-info-image" class="rp-info-button" value=""
+                   onclick="requestpolicy.menu.itemSelected(event);" />
+                <label id="rp-request-info-style" class="rp-info-button" value=""
+                   onclick="requestpolicy.menu.itemSelected(event);" />
+                <label id="rp-request-info-javascript" class="rp-info-button" value=""
+                   onclick="requestpolicy.menu.itemSelected(event);" />
+              </vbox>
+              <vbox id="rp-request-info-list" />
+            </vbox>
           </vbox>
         </hbox>
 

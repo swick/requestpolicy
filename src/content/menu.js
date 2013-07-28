@@ -51,9 +51,19 @@ requestpolicy.menu = {
   _allowedDestinationsList : null,
   _removeRulesList : null,
   _addRulesList : null,
+  _requestInfoList: null,
+  _requestInfoHeader: null,
+  _currentlyActiveDetailedInfo: null,
 
   _isCurrentlySelectedDestBlocked : null,
   _isCurrentlySelectedDestAllowed : null,
+
+  _detailedInfo: {
+    all: [],
+    css: [],
+    images: [],
+    js: []
+  },
 
   _ruleChangeQueues : {},
 
@@ -77,6 +87,9 @@ requestpolicy.menu = {
             .getElementById("rp-allowed-destinations-list");
       this._addRulesList = document.getElementById("rp-rules-add");
       this._removeRulesList = document.getElementById("rp-rules-remove");
+      this._requestInfoList = document.getElementById("rp-request-info-list");
+      this._requestInfoHeader = document.getElementById("rp-request-info-header");
+      this._currentlyActiveDetailedInfo = document.getElementById("rp-request-info-all");
 
       var conflictCount = this._rpService.getConflictingExtensions().length;
       var hideConflictInfo = (conflictCount == 0);
@@ -171,6 +184,8 @@ requestpolicy.menu = {
     this._removeChildren(this._allowedDestinationsList);
     this._removeChildren(this._removeRulesList);
     this._removeChildren(this._addRulesList);
+    this._removeChildren(this._requestInfoList);
+    //this._removeChildren(this._requestInfoHeader);
     document.getElementById('rp-other-origins').hidden = true;
     document.getElementById('rp-blocked-destinations').hidden = true;
     document.getElementById('rp-mixed-destinations').hidden = true;
@@ -241,6 +256,8 @@ requestpolicy.menu = {
     var dest = this._currentlySelectedDest;
     this._removeChildren(this._removeRulesList);
     this._removeChildren(this._addRulesList);
+    this._removeChildren(this._requestInfoList);
+    //this._removeChildren(this._requestInfoHeader);
 
     var ruleData = {
       'o' : {
@@ -334,6 +351,45 @@ requestpolicy.menu = {
     this._populateDetailsRemoveDenyRules(this._removeRulesList);
   },
 
+  _getDetailedInfo : function() {
+    var info = {
+        all: [],
+        css: [],
+        img: [],
+        js: []
+    };
+
+    var uri = null;
+    if (this._currentBaseDomain == this._currentlySelectedOrigin) {
+      uri = this._currentUri;
+    }
+    var ident = 'http://' + this._currentlySelectedOrigin;
+    var reqSet = requestpolicy.mod.RequestUtil.getDeniedRequests(
+          uri, ident, this._otherOrigins);
+
+    var origins = reqSet.getAll();
+    for (var oUri in origins) {
+      for (var dBase in origins[oUri]) {
+        var dests = origins[oUri];
+        if(this._currentlySelectedDest && dBase.indexOf(this._currentlySelectedDest) == -1)
+            continue;
+        for (var dIdent in dests[dBase]) {
+          for (var dUri in dests[dBase][dIdent]) {
+            info.all.push(dUri);
+            if(dUri.toLowerCase().match(/\.css$/))
+                info.css.push(dUri);
+            if(dUri.toLowerCase().match(/\.png|\.jpg|\.gif|\.jpeg$/))
+                info.img.push(dUri);
+            if(dUri.toLowerCase().match(/\.js$/))
+                info.js.push(dUri);
+          }
+        }
+      }
+    }
+
+    return info;
+  },
+
   _removeChildren : function(el) {
     while (el.firstChild) {
       el.removeChild(el.firstChild);
@@ -392,6 +448,7 @@ requestpolicy.menu = {
     this._populateDestinations();
     this._resetSelectedDest();
     this._populateDetails();
+    this._populateRequestInfo();
   },
 
   _activateDestinationItem : function(item) {
@@ -411,6 +468,15 @@ requestpolicy.menu = {
     this._resetSelectedDest();
     item.setAttribute('selected-dest', 'true');
     this._populateDetails();
+    this._populateRequestInfo();
+  },
+
+  _activateInfoHeaderItem : function(item) {
+    this._currentlyActiveDetailedInfo.setAttribute('selected-info', 'false');
+    item.setAttribute('selected-info', 'true');
+    this._currentlyActiveDetailedInfo = item;
+    
+    this._populateRequestInfo();
   },
 
 
@@ -422,6 +488,8 @@ requestpolicy.menu = {
     if (item.id == 'rp-origin' ||
         item.parentNode.id == 'rp-other-origins-list') {
       this._activateOriginItem(item);
+    } else if (item.parentNode.id == "rp-request-info-header" ) {
+      this._activateInfoHeaderItem(item);
     } else if (item.parentNode.id == 'rp-blocked-destinations-list' ||
                item.parentNode.id == 'rp-mixed-destinations-list' ||
                item.parentNode.id == 'rp-allowed-destinations-list') {
@@ -1066,6 +1134,36 @@ requestpolicy.menu = {
       }
     }
 
+  },
+  
+  _populateRequestInfo : function() {
+    var info = this._getDetailedInfo(),
+        blockedList = [];
+    this._removeChildren(this._requestInfoList);
+
+    document.getElementById("rp-request-info-all").setAttribute(
+      "value", this._strbundle.getFormattedString("displayAllBlockedURLs", [info.all.length.toString()]));
+    document.getElementById("rp-request-info-image").setAttribute(
+      "value", this._strbundle.getFormattedString("displayBlockedImageURLs", [info.img.length.toString()]));
+    document.getElementById("rp-request-info-style").setAttribute(
+      "value", this._strbundle.getFormattedString("displayBlockedStyleURLs", [info.css.length.toString()]));
+    document.getElementById("rp-request-info-javascript").setAttribute(
+      "value", this._strbundle.getFormattedString("displayBlockedJavaScriptURLs", [info.js.length.toString()]));
+
+    if(this._currentlyActiveDetailedInfo.id == "rp-request-info-all")
+        blockedList = info.all;
+    if(this._currentlyActiveDetailedInfo.id == "rp-request-info-image")
+        blockedList = info.img;
+    if(this._currentlyActiveDetailedInfo.id == "rp-request-info-style")
+        blockedList = info.css;
+    if(this._currentlyActiveDetailedInfo.id == "rp-request-info-javascript")
+        blockedList = info.js;
+
+    for(var i=0; i<blockedList.length; i++) {
+        var blocked = document.createElement("label");
+        blocked.setAttribute("value", blockedList[i]);
+        this._requestInfoList.insertBefore(blocked, null);
+    }
   },
 
 }
