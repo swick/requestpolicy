@@ -129,7 +129,7 @@ toolbar[iconsize="small"][requestpolicyPermissive="true"] #requestpolicyToolbarB
   font-family: Helvetica, sans-serif;
 }
 #rp-contents {
-  background-color: #ffffff;
+  /*background-color: #ffffff;*/
 }
 #rp-main {
   padding: 10px 10px 10px 10px;
@@ -152,74 +152,87 @@ toolbar[iconsize="small"][requestpolicyPermissive="true"] #requestpolicyToolbarB
 }
 */
 .rp-od-item {
-  border: 1px solid #ffffff;
+  /*border: 1px solid #ffffff;*/
   padding: 0 12px 0 12px;
   margin: 0px 4px 0px 4px;
   border-radius: 3px;
 }
 
 #rp-origins-destinations [selected-origin="true"] {
-  border-color: #ddd !important;
-  background-color: #eaeaea;
+  /*border-color: #ddd !important;
+  background-color: #eaeaea;*/
+  background-color: @toolbarbuttonPressedBackgroundColor@;
+  text-decoration: underline;
 }
 #rp-origins-destinations [selected-origin="false"]:hover {
-  border-color: #eee !important;
-  background-color: #f1f1f1;
+  /*border-color: #eee !important;
+  background-color: #f1f1f1;*/
+  text-decoration: underline;
 }
 
 #rp-blocked-destinations [selected-dest="true"] {
-  border-color: #edd !important;
-  background-color: #ffe1e1;
+  /*border-color: #edd !important;
+  background-color: #ffe1e1;*/
+  background-color: @toolbarbuttonPressedBackgroundColor@;
+  text-decoration: underline;
 }
 #rp-blocked-destinations [selected-dest="false"]:hover {
-  border-color: #fee !important;
-  background-color: #fff1f1;
+  /*border-color: #fee !important;
+  background-color: #fff1f1;*/
+  text-decoration: underline;
 }
 
 #rp-mixed-destinations [selected-dest="true"] {
-  border-color: #F2E2C7 !important;
-  background-color: #FFF3DE;
+  /*border-color: #F2E2C7 !important;
+  background-color: #FFF3DE;*/
+  background-color: @toolbarbuttonPressedBackgroundColor@;
+  text-decoration: underline;
 }
 #rp-mixed-destinations [selected-dest="false"]:hover {
-  border-color: #FFF3DE !important;
-  background-color: #FFFAF2;
+  /*border-color: #FFF3DE !important;
+  background-color: #FFFAF2;*/
+  text-decoration: underline;
 }
 
 #rp-allowed-destinations [selected-dest="true"] {
-  border-color: #ded !important;
-  background-color: #e1ffe1;
+  /*border-color: #ded !important;
+  background-color: #e1ffe1;*/
+  background-color: @toolbarbuttonPressedBackgroundColor@;
+  text-decoration: underline;
 }
 #rp-allowed-destinations [selected-dest="false"]:hover {
-  border-color: #efe !important;
-  background-color: #f1fff1;
+  /*border-color: #efe !important;
+  background-color: #f1fff1;*/
+  text-decoration: underline;
 }
 
 #rp-details .rp-od-item:hover {
-  border-color: #eee !important;
-  background-color: #f1f1f1;
+  /*border-color: #eee !important;
+  background-color: #f1f1f1;*/
 }
 #rp-details .rp-allow {
   /* This should probably stay the same color as the allowed destinations. */
-  color: #484;
+  /*color: #484;*/
 }
 #rp-details .rp-deny {
   /* This should probably stay the same color as the blocked destinations. */
-  color: #844;
+  /*color: #844;*/
 }
 #rp-details .rp-temporary {
   font-style: italic;
   font-size: 0.9em;
-  color: #999;
+  margin-left: 10px;
+  /*color: #999;*/
 }
 /* When in private browsing mode, the user only has the option of adding
    temporary rules. So, don't show them only small, grey text. */
 #rp-details.privatebrowsing .rp-allow {
   font-size: 1em;
-  color: #484;
+  /*color: #484;*/
 }
 #rp-details.privatebrowsing .rp-deny {
   font-size: 1em;
-  color: #844;
+  /*color: #844;*/
 }
 
 
@@ -229,6 +242,7 @@ toolbar[iconsize="small"][requestpolicyPermissive="true"] #requestpolicyToolbarB
 }
 
 #rp-details .rp-start-rule[selected-rule="true"] {
+  background-color: @toolbarbuttonPressedBackgroundColor@;
   text-decoration: underline;
 }
 
@@ -244,24 +258,31 @@ toolbar[iconsize="small"][requestpolicyPermissive="true"] #requestpolicyToolbarB
   float: left;
 }
 
+#rp-request-info-list {
+  overflow: auto;
+  padding-bottom: 15px;
+}
+
 .rp-info-button {
   margin-right: 10px;
-  color: #844;
+  /*color: #844;*/
   padding-left: 4px;
   padding-right: 4px;
 }
 
 .rp-info-button:hover {
-  background-color: #fff1f1;
+  /*background-color: #fff1f1;*/
+  text-decoration: underline;
 }
 
 .rp-info-button[selected-info="true"] {
-  background-color: #ffe1e1 !important;
+  /*background-color: #ffe1e1 !important;*/
+  text-decoration: underline;
 }
 
 #rp-origin {
   font-size: 1.2em;
-  color : #555;
+  /*color : #555;*/
   padding-right: 10px;
 }
 
@@ -269,52 +290,52 @@ toolbar[iconsize="small"][requestpolicyPermissive="true"] #requestpolicyToolbarB
   /*margin-left : 10px;*/
 }
 #rp-other-origins {
-  color: #444;
+  /*color: #444;*/
   margin-top: 1em;
   padding-bottom: 1em;
-  border-bottom: 1px solid #eee;
+  /*border-bottom: 1px solid #eee;*/
 }
 #rp-other-origins-title {
-  color: #aaa;
+  /*color: #aaa;*/
 }
 
 #rp-blocked-destinations {
-  color: #844;
+  /*color: #844;*/
   margin-top: 1em;
 }
 #rp-blocked-destinations-title {
-  color: #caa;
+  /*color: #caa;*/
 }
 
 #rp-mixed-destinations {
-  color: #AA7215;
+  /*color: #AA7215;*/
   margin-top: 1em;
 }
 #rp-mixed-destinations-title {
-  color: #CCAF7D;
+  /*color: #CCAF7D;*/
 }
 
 #rp-allowed-destinations {
-  color: #484;
+  /*color: #484;*/
   margin-top: 1em;
 }
 #rp-allowed-destinations-title {
-  color: #aca;
+  /*color: #aca;*/
 }
 
 #rp-details {
   padding: 0 1em 0 1em;
-  border-left: 1px solid #eee;
+  /*border-left: 1px solid #eee;*/
   width: 500px !important;
 }
 
 #rp-revoke-temporary-permissions {
-  border-top: 1px solid #ddd;
+  /*border-top: 1px solid #ddd;*/
   padding: 7px 5px 9px 5px;
   -moz-box-pack: center;
 }
 #rp-revoke-temporary-permissions label {
-  color: #2550ba;
+  /*color: #2550ba;*/
   font-size: 14px;
   margin: 0 10px 0 10px;
 }
@@ -324,7 +345,7 @@ toolbar[iconsize="small"][requestpolicyPermissive="true"] #requestpolicyToolbarB
 }
 
 #rp-footer {
-  border-top: 1px solid #ddd;
+  /*border-top: 1px solid #ddd;*/
   padding: 0 5px 2px 5px;
   -moz-box-pack: end;
 }
@@ -332,20 +353,20 @@ toolbar[iconsize="small"][requestpolicyPermissive="true"] #requestpolicyToolbarB
   margin-top: 4px;
 }
 .rp-footer-link {
-  color: #888;
+  /*color: #888;*/
   font-size: 11px;
   margin: 0 10px 0 10px;
 }
 .rp-footer-link:hover {
-  color: #555;
+  /*color: #555;*/
   text-decoration: underline;
   cursor: pointer;
 }
 #rp-link-disable-blocking {
-  color: #000;
+  /*color: #000;*/
 }
 #rp-link-enable-blocking {
-  color: #966803;
+  /*color: #966803;*/
 }
 
 /*********************************************

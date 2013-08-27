@@ -376,11 +376,15 @@ requestpolicy.menu = {
         for (var dIdent in dests[dBase]) {
           for (var dUri in dests[dBase][dIdent]) {
             info.all.push(dUri);
-            if(dUri.toLowerCase().match(/\.css$/))
+            var rstr = dUri;
+            var endPos = dUri.indexOf("?");
+            if(endPos > -1)
+                rstr = rstr.substr(0, endPos);
+            if(rstr.toLowerCase().match(/\.css$/))
                 info.css.push(dUri);
-            if(dUri.toLowerCase().match(/\.png|\.jpg|\.gif|\.jpeg$/))
+            if(rstr.toLowerCase().match(/(\.png|\.jpg|\.gif|\.jpeg)$/))
                 info.img.push(dUri);
-            if(dUri.toLowerCase().match(/\.js$/))
+            if(rstr.toLowerCase().match(/\.js$/))
                 info.js.push(dUri);
           }
         }
@@ -1161,6 +1165,9 @@ requestpolicy.menu = {
 
     for(var i=0; i<blockedList.length; i++) {
         var blocked = document.createElement("label");
+        
+        blocked.setAttribute("href", blockedList[i]);
+        blocked.setAttribute("class", "text-link");
         blocked.setAttribute("value", blockedList[i]);
         this._requestInfoList.insertBefore(blocked, null);
     }
